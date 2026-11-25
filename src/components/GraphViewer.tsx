@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
-import { Maximize2, Plus, Minus } from 'lucide-react';
+import { Maximize2, Plus, Minus, Sparkles } from 'lucide-react';
 import type { GraphEdge, GraphNode } from '../db/relateClient';
 
 interface GraphViewerProps {
@@ -12,7 +12,11 @@ interface GraphViewerProps {
 export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<any>(null);
-  const [selectedInfo, setSelectedInfo] = useState<{ type: string; name: string } | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<{
+    type: string;
+    name: string;
+    version: string;
+  } | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -55,18 +59,19 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
           selector: 'node',
           style: {
             label: 'data(label)',
-            color: '#f5f5f7',
-            'font-family': '-apple-system, BlinkMacSystemFont, Inter, sans-serif',
+            color: '#e2e8f0',
+            'font-family': 'Plus Jakarta Sans, sans-serif',
             'font-size': '11px',
             'font-weight': 500,
             'text-valign': 'bottom',
-            'text-margin-y': 7,
-            'text-background-color': '#09090b',
-            'text-background-opacity': 0.85,
-            'text-background-padding': '3px',
-            'background-color': '#52525b',
-            'border-width': 1.5,
-            'border-color': 'rgba(255,255,255,0.18)',
+            'text-margin-y': 8,
+            'text-background-color': '#030712',
+            'text-background-opacity': 0.8,
+            'text-background-padding': '4px',
+            'background-color': '#38bdf8',
+            'background-opacity': 0.85,
+            'border-width': 2,
+            'border-color': 'rgba(56, 189, 248, 0.35)',
             width: 24,
             height: 24,
           },
@@ -74,65 +79,66 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
         {
           selector: 'node[nodeType = "Project"]',
           style: {
-            'background-color': '#0a84ff',
-            'border-color': '#64d2ff',
-            'border-width': 2,
-            width: 38,
-            height: 38,
+            'background-color': '#818cf8',
+            'border-color': 'rgba(129, 140, 248, 0.5)',
+            'border-width': 4,
+            width: 42,
+            height: 42,
             'font-size': '12px',
-            'font-weight': 600,
+            'font-weight': 700,
+            color: '#ffffff',
           },
         },
         {
           selector: 'node[nodeType = "Vulnerability"]',
           style: {
-            'background-color': '#ff453a',
-            'border-color': 'rgba(255, 69, 58, 0.4)',
+            'background-color': '#fb7185',
+            'border-color': 'rgba(251, 113, 133, 0.35)',
             'border-width': 3,
             shape: 'ellipse',
-            width: 12,
-            height: 12,
+            width: 11,
+            height: 11,
           },
         },
         {
           selector: 'node[highlighted = "yes"]',
           style: {
-            'border-width': 2.5,
-            'border-color': '#ffd60a',
+            'border-width': 3,
+            'border-color': '#34d399',
           },
         },
         {
           selector: 'node[dimmed = "yes"]',
           style: {
-            opacity: 0.16,
+            opacity: 0.14,
           },
         },
         {
           selector: 'edge',
           style: {
-            width: 1.25,
-            'line-color': 'rgba(255, 255, 255, 0.14)',
-            'target-arrow-color': 'rgba(255, 255, 255, 0.22)',
+            width: 1.4,
+            'line-color': 'rgba(148, 163, 184, 0.18)',
+            'target-arrow-color': 'rgba(148, 163, 184, 0.28)',
             'target-arrow-shape': 'triangle',
-            'arrow-scale': 0.75,
-            'curve-style': 'bezier',
+            'arrow-scale': 0.7,
+            'curve-style': 'unbundled-bezier',
           },
         },
         {
           selector: 'edge[edgeType = "HAS_VULNERABILITY"]',
           style: {
             width: 1,
-            'line-color': 'rgba(255, 69, 58, 0.32)',
-            'target-arrow-color': 'rgba(255, 69, 58, 0.32)',
+            'line-color': 'rgba(251, 113, 133, 0.25)',
+            'target-arrow-color': 'rgba(251, 113, 133, 0.25)',
             'line-style': 'dotted',
           },
         },
         {
           selector: 'edge[highlighted = "yes"]',
           style: {
-            width: 2,
-            'line-color': '#ffd60a',
-            'target-arrow-color': '#ffd60a',
+            width: 2.2,
+            'line-color': '#34d399',
+            'target-arrow-color': '#34d399',
             'line-style': 'solid',
           },
         },
@@ -141,20 +147,23 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
         name: 'cose',
         animate: false,
         fit: true,
-        padding: 40,
-        nodeRepulsion: () => 22000,
-        idealEdgeLength: () => 95,
+        padding: 44,
+        nodeRepulsion: () => 24000,
+        idealEdgeLength: () => 100,
       },
     });
 
     cy.on('mouseover', 'node', (evt: any) => {
       const data = evt.target.data();
-      const ver = data.version ? ` v${data.version}` : '';
-      setSelectedInfo({ type: data.nodeType, name: `${data.fullName}${ver}` });
+      setHoveredNode({
+        type: data.nodeType,
+        name: data.fullName,
+        version: data.version || '',
+      });
     });
 
     cy.on('mouseout', 'node', () => {
-      setSelectedInfo(null);
+      setHoveredNode(null);
     });
 
     cyRef.current = cy;
@@ -169,14 +178,27 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
       style={{
         position: 'relative',
         width: '100%',
-        height: '500px',
-        background: 'radial-gradient(circle at 50% 35%, #16181d 0%, #09090b 100%)',
-        borderRadius: '20px',
+        height: '520px',
+        background:
+          'radial-gradient(circle at 30% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(129, 140, 248, 0.08) 0%, transparent 45%), #070b14',
+        borderRadius: '24px',
         border: '1px solid rgba(255, 255, 255, 0.08)',
         overflow: 'hidden',
-        boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.06)',
+        boxShadow: '0 24px 48px -12px rgba(0, 0, 0, 0.6)',
       }}
     >
+      {/* Grade tecnológica sutil no fundo */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage:
+            'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+          pointerEvents: 'none',
+        }}
+      />
+
       <div
         ref={containerRef}
         style={{
@@ -187,94 +209,104 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
         }}
       />
 
-      {/* Dynamic Island / Floating Pill Inspector */}
-      {selectedInfo && (
+      {/* Cápsula de Inspeção Flutuante */}
+      {hoveredNode ? (
         <div
           style={{
             position: 'absolute',
-            top: '16px',
+            top: '18px',
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'rgba(28, 28, 30, 0.82)',
+            background: 'rgba(15, 23, 42, 0.85)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            color: '#f5f5f7',
-            padding: '7px 16px',
+            border: '1px solid rgba(56, 189, 248, 0.35)',
+            color: '#f8fafc',
+            padding: '8px 18px',
             borderRadius: '999px',
-            fontSize: '0.78rem',
+            fontSize: '0.8rem',
             fontWeight: 500,
-            letterSpacing: '-0.01em',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.5)',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)',
             pointerEvents: 'none',
           }}
         >
-          <span
-            style={{
-              width: '7px',
-              height: '7px',
-              borderRadius: '50%',
-              background:
-                selectedInfo.type === 'Vulnerability'
-                  ? '#ff453a'
-                  : selectedInfo.type === 'Project'
-                  ? '#0a84ff'
-                  : '#98989d',
-            }}
-          />
-          <span style={{ color: '#86868b' }}>{selectedInfo.type}</span>
-          <span>{selectedInfo.name}</span>
+          <Sparkles size={13} color="#38bdf8" />
+          <span style={{ color: '#94a3b8' }}>{hoveredNode.type}</span>
+          <strong style={{ fontWeight: 600 }}>{hoveredNode.name}</strong>
+          {hoveredNode.version && (
+            <span style={{ color: '#38bdf8', fontSize: '0.75rem' }}>
+              v{hoveredNode.version}
+            </span>
+          )}
+        </div>
+      ) : (
+        <div
+          style={{
+            position: 'absolute',
+            top: '18px',
+            left: '18px',
+            background: 'rgba(15, 23, 42, 0.6)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.07)',
+            padding: '6px 14px',
+            borderRadius: '999px',
+            fontSize: '0.74rem',
+            color: '#94a3b8',
+            pointerEvents: 'none',
+          }}
+        >
+          Passe o cursor sobre os nós para inspecionar dependências e CVEs
         </div>
       )}
 
-      {/* Legenda minimalista no canto inferior esquerdo */}
+      {/* Legenda minimalista */}
       <div
         style={{
           position: 'absolute',
-          bottom: '16px',
-          left: '16px',
-          background: 'rgba(28, 28, 30, 0.72)',
+          bottom: '18px',
+          left: '18px',
+          background: 'rgba(15, 23, 42, 0.75)',
           backdropFilter: 'blur(16px)',
           border: '1px solid rgba(255, 255, 255, 0.08)',
-          padding: '6px 12px',
+          padding: '7px 14px',
           borderRadius: '999px',
           display: 'flex',
           alignItems: 'center',
           gap: '14px',
-          fontSize: '0.72rem',
-          color: '#a1a1a6',
+          fontSize: '0.73rem',
+          color: '#cbd5e1',
         }}
       >
-        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <i style={{ width: 7, height: 7, borderRadius: '50%', background: '#0a84ff', display: 'inline-block' }} />
-          Projeto
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <i style={{ width: 8, height: 8, borderRadius: '50%', background: '#818cf8', display: 'inline-block' }} />
+          Aplicação
         </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <i style={{ width: 7, height: 7, borderRadius: '50%', background: '#636366', display: 'inline-block' }} />
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <i style={{ width: 8, height: 8, borderRadius: '50%', background: '#38bdf8', display: 'inline-block' }} />
           Pacote
         </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <i style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff453a', display: 'inline-block' }} />
-          CVE
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <i style={{ width: 8, height: 8, borderRadius: '50%', background: '#fb7185', display: 'inline-block' }} />
+          Vulnerabilidade
         </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-          <i style={{ width: 10, height: 2, background: '#ffd60a', display: 'inline-block' }} />
-          Rota Isolada
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <i style={{ width: 12, height: 2, background: '#34d399', display: 'inline-block' }} />
+          Caminho Ativo
         </span>
       </div>
 
-      {/* Controles flutuantes estilo macOS */}
+      {/* Controles de Zoom Flutuantes */}
       <div
         style={{
           position: 'absolute',
-          bottom: '16px',
-          right: '16px',
+          bottom: '18px',
+          right: '18px',
           display: 'flex',
-          gap: '6px',
-          background: 'rgba(28, 28, 30, 0.78)',
+          gap: '4px',
+          background: 'rgba(15, 23, 42, 0.8)',
           backdropFilter: 'blur(16px)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
           padding: '4px',
@@ -296,11 +328,11 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
           <Minus size={14} />
         </button>
         <button
-          onClick={() => cyRef.current?.fit(undefined, 40)}
-          title="Ajustar à tela"
-          style={{ ...controlBtnStyle, padding: '5px 10px', gap: '4px', fontSize: '0.72rem' }}
+          onClick={() => cyRef.current?.fit(undefined, 44)}
+          title="Centralizar"
+          style={{ ...controlBtnStyle, padding: '5px 12px', gap: '5px', fontSize: '0.73rem' }}
         >
-          <Maximize2 size={12} /> Ajustar
+          <Maximize2 size={12} /> Centralizar
         </button>
       </div>
     </div>
@@ -310,8 +342,8 @@ export function GraphViewer({ nodes, edges, highlightedIds }: GraphViewerProps) 
 const controlBtnStyle: React.CSSProperties = {
   background: 'transparent',
   border: 'none',
-  color: '#f5f5f7',
-  padding: '5px 7px',
+  color: '#f8fafc',
+  padding: '6px 8px',
   borderRadius: '999px',
   cursor: 'pointer',
   display: 'flex',

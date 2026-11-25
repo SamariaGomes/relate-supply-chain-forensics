@@ -5,8 +5,12 @@ import {
   Upload,
   Sparkles,
   Wrench,
-  Terminal,
-  ShieldCheck,
+  Code2,
+  ShieldAlert,
+  Layers,
+  Activity,
+  ChevronDown,
+  ChevronUp,
   ArrowUpRight,
 } from 'lucide-react';
 import { parsePackageLock } from './services/lockfileParser';
@@ -26,9 +30,10 @@ export function App() {
   const [highlightedIds, setHighlightedIds] = useState<string[]>([]);
   const [activePresetId, setActivePresetId] = useState<string>(PRESET_QUERIES[0].id);
   const [cypher, setCypher] = useState<string>(PRESET_QUERIES[0].cypher);
+  const [showCode, setShowCode] = useState<boolean>(false);
   const [queryResult, setQueryResult] = useState<any[]>([]);
   const [remediations, setRemediations] = useState<RemediationInsight[]>([]);
-  const [status, setStatus] = useState<string>('Inicializando motor Relate...');
+  const [status, setStatus] = useState<string>('Motor Relate pronto');
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export function App() {
           const raw = await res.text();
           relateStore.importFromSingleFile(raw);
           refreshGraph();
-          setStatus('Relate Single-File carregado');
+          setStatus('Grafo restaurado de supply-chain-audit.relate');
           await executeQuery(PRESET_QUERIES[0].cypher);
           return;
         }
@@ -62,14 +67,14 @@ export function App() {
   async function processLockfileText(text: string, label: string) {
     setLoading(true);
     try {
-      setStatus(`Analisando ${label} localmente...`);
+      setStatus(`Mapeando árvore de ${label}...`);
       const parsed = parsePackageLock(text);
-      setStatus(`Consultando CVEs em tempo real (OSV.dev)...`);
+      setStatus(`Sincronizando inteligência de CVEs (OSV.dev)...`);
       const vulns = await fetchVulnerabilities(parsed.packages);
       await relateStore.ingestLockfile(parsed, vulns);
       refreshGraph();
       await executeQuery(cypher);
-      setStatus(`${parsed.packages.length} pacotes · ${vulns.length} vulnerabilidades mapeadas`);
+      setStatus(`Auditoria ativa · ${parsed.packages.length} pacotes analisados`);
     } catch (err: any) {
       setStatus(`Erro: ${err.message}`);
     } finally {
@@ -91,7 +96,7 @@ export function App() {
       relateStore.importFromSingleFile(text);
       refreshGraph();
       await executeQuery(cypher);
-      setStatus(`Arquivo "${file.name}" restaurado`);
+      setStatus(`Snapshot "${file.name}" carregado`);
       return;
     }
     await processLockfileText(text, file.name);
@@ -114,29 +119,37 @@ export function App() {
     URL.revokeObjectURL(url);
   }
 
+  const packageCount = nodes.filter((n) => n.label === 'Package').length;
   const vulnCount = nodes.filter((n) => n.label === 'Vulnerability').length;
   const activePreset = PRESET_QUERIES.find((p) => p.id === activePresetId);
+
+  const lensTitles: Record<string, { label: string; badge: string }> = {
+    'transitive-critical': { label: 'Riscos Críticos', badge: 'Transitivo' },
+    'prod-only': { label: 'Exposição em Produção', badge: 'Runtime' },
+    'blast-radius': { label: 'Núcleos de Impacto', badge: 'Topologia' },
+  };
 
   return (
     <div
       style={{
         minHeight: '100vh',
-        background: '#000000',
-        color: '#f5f5f7',
-        padding: '28px 32px 48px',
+        background:
+          'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(56, 189, 248, 0.14), transparent), #030712',
+        color: '#f8fafc',
+        padding: '28px 32px 56px',
         overflowX: 'hidden',
       }}
     >
-      {/* Top Navigation / Hero Glass Banner estilo Apple */}
+      {/* Hero Banner Tecnológico Moderno */}
       <header
         style={{
-          maxWidth: '1320px',
-          margin: '0 auto 28px',
-          padding: '32px 36px',
-          borderRadius: '24px',
+          maxWidth: '1340px',
+          margin: '0 auto 24px',
+          padding: '34px 38px',
+          borderRadius: '26px',
           border: '1px solid rgba(255, 255, 255, 0.1)',
           backgroundImage:
-            'linear-gradient(105deg, rgba(10, 10, 12, 0.94) 35%, rgba(10, 10, 12, 0.55) 100%), url("/hero-bg.jpg")',
+            'linear-gradient(100deg, rgba(3, 7, 18, 0.94) 38%, rgba(3, 7, 18, 0.52) 100%), url("/hero-bg.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           display: 'flex',
@@ -144,68 +157,75 @@ export function App() {
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '24px',
-          boxShadow: '0 24px 48px -12px rgba(0, 0, 0, 0.85)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.75)',
         }}
       >
-        <div style={{ maxWidth: '580px' }}>
+        <div style={{ maxWidth: '600px' }}>
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '4px 12px',
+              gap: '8px',
+              padding: '5px 14px',
               borderRadius: '999px',
-              background: 'rgba(255, 255, 255, 0.07)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              fontSize: '0.72rem',
-              fontWeight: 500,
-              color: '#a1a1a6',
-              letterSpacing: '0.02em',
-              marginBottom: '12px',
+              background: 'rgba(56, 189, 248, 0.1)',
+              border: '1px solid rgba(56, 189, 248, 0.25)',
+              fontSize: '0.73rem',
+              fontWeight: 600,
+              color: '#7dd3fc',
+              letterSpacing: '0.03em',
+              marginBottom: '14px',
             }}
           >
-            <ShieldCheck size={13} color="#30d158" />
-            RELATE EMBEDDED GRAPH ENGINE · ZERO-BACKEND
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: loading ? '#fbbf24' : '#34d399',
+                boxShadow: loading ? '0 0 8px #fbbf24' : '0 0 8px #34d399',
+              }}
+            />
+            POWERED BY RELATE GRAPH ENGINE
           </div>
 
           <h1
             style={{
               margin: 0,
-              fontSize: '2rem',
-              fontWeight: 600,
-              letterSpacing: '-0.03em',
-              lineHeight: 1.15,
-              background: 'linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%)',
+              fontSize: '2.15rem',
+              fontWeight: 700,
+              letterSpacing: '-0.035em',
+              lineHeight: 1.12,
+              background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 60%, #7dd3fc 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
           >
-            Supply Chain Forensics
+            Supply Chain Intelligence
           </h1>
 
           <p
             style={{
-              margin: '8px 0 0',
-              color: '#86868b',
+              margin: '10px 0 0',
+              color: '#94a3b8',
               fontSize: '0.95rem',
-              lineHeight: 1.5,
-              fontWeight: 400,
+              lineHeight: 1.55,
             }}
           >
-            Mapeamento profundo de dependências transitivas e vulnerabilidades executado privadamente no seu navegador.
+            Visibilidade em tempo real sobre dependências ocultas, caminhos de ataque e remediação automatizada por grafo.
           </p>
         </div>
 
-        {/* Pill Action Buttons estilo Apple */}
+        {/* Botões de Ação Modernos */}
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
           <label
             style={{
-              background: 'rgba(255, 255, 255, 0.08)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              color: '#f5f5f7',
-              padding: '10px 18px',
-              borderRadius: '999px',
+              background: 'rgba(15, 23, 42, 0.72)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              color: '#f8fafc',
+              padding: '11px 18px',
+              borderRadius: '14px',
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
@@ -213,11 +233,10 @@ export function App() {
               fontSize: '0.84rem',
               fontWeight: 500,
               border: '1px solid rgba(255, 255, 255, 0.14)',
-              transition: 'all 0.2s ease',
             }}
           >
-            <Upload size={15} />
-            Importar Arquivo
+            <Upload size={15} color="#38bdf8" />
+            Carregar Lockfile
             <input
               type="file"
               accept=".json,.relate,.rl"
@@ -230,51 +249,100 @@ export function App() {
             onClick={loadDemoLockfile}
             disabled={loading}
             style={{
-              background: '#f5f5f7',
-              color: '#000000',
+              background: 'rgba(255, 255, 255, 0.95)',
+              color: '#030712',
               border: 'none',
-              padding: '10px 20px',
-              borderRadius: '999px',
+              padding: '11px 20px',
+              borderRadius: '14px',
               cursor: 'pointer',
               fontSize: '0.84rem',
               fontWeight: 600,
-              letterSpacing: '-0.01em',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
+              boxShadow: '0 8px 20px rgba(255, 255, 255, 0.12)',
             }}
           >
-            Analisar Demo
+            Simular Auditoria
             <ArrowUpRight size={15} />
           </button>
 
           <button
             onClick={handleExportRelateFile}
             style={{
-              background: '#0a84ff',
+              background: 'linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%)',
               color: '#ffffff',
               border: 'none',
-              padding: '10px 20px',
-              borderRadius: '999px',
+              padding: '11px 20px',
+              borderRadius: '14px',
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '7px',
               fontSize: '0.84rem',
-              fontWeight: 500,
-              letterSpacing: '-0.01em',
+              fontWeight: 600,
+              boxShadow: '0 8px 24px rgba(14, 165, 233, 0.3)',
             }}
           >
             <Download size={15} />
-            Exportar .relate
+            Salvar .relate
           </button>
         </div>
       </header>
 
-      {/* Main Workspace */}
+      {/* Faixa de Métricas Modernas (KPI Cards) */}
+      <section
+        style={{
+          maxWidth: '1340px',
+          margin: '0 auto 24px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '14px',
+        }}
+      >
+        <div style={kpiCardStyle}>
+          <div style={kpiHeaderStyle}>
+            <span>Componentes Mapeados</span>
+            <Layers size={15} color="#38bdf8" />
+          </div>
+          <div style={kpiValueStyle}>{packageCount}</div>
+          <div style={kpiSubStyle}>Dependências diretas e transitivas</div>
+        </div>
+
+        <div style={kpiCardStyle}>
+          <div style={kpiHeaderStyle}>
+            <span>Vulnerabilidades Ativas</span>
+            <ShieldAlert size={15} color="#fb7185" />
+          </div>
+          <div style={{ ...kpiValueStyle, color: '#fb7185' }}>{vulnCount}</div>
+          <div style={kpiSubStyle}>Alertas sincronizados via OSV.dev</div>
+        </div>
+
+        <div style={kpiCardStyle}>
+          <div style={kpiHeaderStyle}>
+            <span>Ações de Correção</span>
+            <Wrench size={15} color="#34d399" />
+          </div>
+          <div style={{ ...kpiValueStyle, color: '#34d399' }}>{remediations.length}</div>
+          <div style={kpiSubStyle}>Pacotes raiz que eliminam falhas</div>
+        </div>
+
+        <div style={kpiCardStyle}>
+          <div style={kpiHeaderStyle}>
+            <span>Status do Motor</span>
+            <Activity size={15} color="#818cf8" />
+          </div>
+          <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e2e8f0', marginTop: '8px' }}>
+            {status}
+          </div>
+          <div style={kpiSubStyle}>Processamento local 100% privado</div>
+        </div>
+      </section>
+
+      {/* Workspace Principal */}
       <main
         style={{
-          maxWidth: '1320px',
+          maxWidth: '1340px',
           margin: '0 auto',
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1.35fr) minmax(0, 1fr)',
@@ -282,56 +350,18 @@ export function App() {
           alignItems: 'start',
         }}
       >
-        {/* Left Column: Graph + AI Remediation */}
+        {/* Coluna Esquerda: Grafo Interativo + Plano de Ação */}
         <section style={{ minWidth: 0 }}>
-          {/* Status & Telemetry Bar */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '12px',
-              padding: '0 6px',
-              fontSize: '0.8rem',
-              color: '#86868b',
-              flexWrap: 'wrap',
-              gap: '8px',
-            }}
-          >
-            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  background: loading ? '#ffd60a' : '#30d158',
-                }}
-              />
-              {status}
-            </span>
-
-            <div style={{ display: 'flex', gap: '16px', fontVariantNumeric: 'tabular-nums' }}>
-              <span>
-                Nós <strong style={{ color: '#f5f5f7', fontWeight: 600 }}>{nodes.length}</strong>
-              </span>
-              <span>
-                Relações <strong style={{ color: '#f5f5f7', fontWeight: 600 }}>{edges.length}</strong>
-              </span>
-              <span>
-                CVEs <strong style={{ color: '#ff453a', fontWeight: 600 }}>{vulnCount}</strong>
-              </span>
-            </div>
-          </div>
-
           <GraphViewer nodes={nodes} edges={edges} highlightedIds={highlightedIds} />
 
-          {/* AI Remediation Card */}
+          {/* Card de Remediação Inteligente */}
           <div
             style={{
               marginTop: '20px',
-              background: '#111113',
-              padding: '22px 24px',
-              borderRadius: '20px',
+              background: 'rgba(15, 23, 42, 0.55)',
+              backdropFilter: 'blur(20px)',
+              padding: '24px',
+              borderRadius: '24px',
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           >
@@ -340,32 +370,30 @@ export function App() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: '14px',
+                marginBottom: '16px',
               }}
             >
               <h3
                 style={{
                   margin: 0,
-                  fontSize: '0.95rem',
+                  fontSize: '1rem',
                   fontWeight: 600,
-                  letterSpacing: '-0.01em',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  color: '#f5f5f7',
                 }}
               >
-                <Wrench size={16} color="#30d158" />
-                Plano de Remediação Inteligente
+                <Wrench size={17} color="#34d399" />
+                Recomendações de Remediação
               </h3>
-              <span style={{ fontSize: '0.75rem', color: '#86868b' }}>
-                Contexto extraído do grafo
+              <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+                Priorizado por impacto no grafo
               </span>
             </div>
 
             {remediations.length === 0 ? (
-              <p style={{ margin: 0, fontSize: '0.84rem', color: '#86868b' }}>
-                Nenhuma vulnerabilidade crítica detectada na árvore atual.
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#94a3b8' }}>
+                Nenhuma atualização urgente necessária.
               </p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -373,9 +401,9 @@ export function App() {
                   <div
                     key={rem.rootPackage}
                     style={{
-                      background: 'rgba(255, 255, 255, 0.03)',
-                      padding: '14px 16px',
-                      borderRadius: '14px',
+                      background: 'rgba(255, 255, 255, 0.025)',
+                      padding: '15px 18px',
+                      borderRadius: '16px',
                       border: '1px solid rgba(255, 255, 255, 0.06)',
                       display: 'flex',
                       justifyContent: 'space-between',
@@ -384,27 +412,29 @@ export function App() {
                     }}
                   >
                     <div>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 500, color: '#f5f5f7' }}>
-                        Atualizar <span style={{ color: '#30d158' }}>{rem.rootPackage}</span>
+                      <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#f8fafc' }}>
+                        Atualizar pacote direto{' '}
+                        <span style={{ color: '#38bdf8' }}>{rem.rootPackage}</span>
                       </div>
-                      <div style={{ color: '#86868b', fontSize: '0.76rem', marginTop: '3px' }}>
-                        Elimina {rem.vulnerabilitiesSolved} falha(s) transitiva(s) ·{' '}
+                      <div style={{ color: '#94a3b8', fontSize: '0.78rem', marginTop: '4px' }}>
+                        Neutraliza {rem.vulnerabilitiesSolved} vulnerabilidade(s) na cadeia ·{' '}
                         {rem.cves.slice(0, 3).join(', ')}
                         {rem.cves.length > 3 ? ` +${rem.cves.length - 3}` : ''}
                       </div>
                     </div>
                     <span
                       style={{
-                        background: 'rgba(48, 209, 88, 0.12)',
-                        color: '#30d158',
-                        padding: '4px 10px',
+                        background: 'rgba(52, 211, 153, 0.12)',
+                        border: '1px solid rgba(52, 211, 153, 0.25)',
+                        color: '#34d399',
+                        padding: '5px 12px',
                         borderRadius: '999px',
-                        fontSize: '0.74rem',
+                        fontSize: '0.75rem',
                         fontWeight: 600,
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      -{rem.vulnerabilitiesSolved} CVEs
+                      -{rem.vulnerabilitiesSolved} falhas
                     </span>
                   </div>
                 ))}
@@ -413,14 +443,15 @@ export function App() {
           </div>
         </section>
 
-        {/* Right Column: Apple-style Segmented Query Studio + Results */}
+        {/* Coluna Direita: Lentes de Inteligência + Resultados */}
         <section style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Query Studio Card */}
+          {/* Lentes de Análise (Visual limpo sem parecer terminal) */}
           <div
             style={{
-              background: '#111113',
-              padding: '22px 24px',
-              borderRadius: '20px',
+              background: 'rgba(15, 23, 42, 0.55)',
+              backdropFilter: 'blur(20px)',
+              padding: '24px',
+              borderRadius: '24px',
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           >
@@ -429,41 +460,50 @@ export function App() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginBottom: '14px',
+                marginBottom: '16px',
               }}
             >
               <h2
                 style={{
                   margin: 0,
-                  fontSize: '0.95rem',
+                  fontSize: '1rem',
                   fontWeight: 600,
-                  letterSpacing: '-0.01em',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
                 }}
               >
-                <Terminal size={16} color="#0a84ff" />
-                Cypher Studio
+                <Sparkles size={17} color="#38bdf8" />
+                Lentes de Investigação
               </h2>
-              <span style={{ fontSize: '0.74rem', color: '#86868b' }}>Relate Query Engine</span>
+
+              <button
+                onClick={() => setShowCode(!showCode)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  color: '#cbd5e1',
+                  padding: '5px 11px',
+                  borderRadius: '999px',
+                  fontSize: '0.73rem',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                }}
+              >
+                <Code2 size={13} color="#38bdf8" />
+                {showCode ? 'Ocultar Cypher' : 'Ver Cypher'}
+                {showCode ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+              </button>
             </div>
 
-            {/* Apple Segmented Control */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                background: '#1c1c1e',
-                padding: '4px',
-                borderRadius: '12px',
-                marginBottom: '12px',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
-              }}
-            >
-              {PRESET_QUERIES.map((q: PresetQuery, idx: number) => {
+            {/* Cards interativos de Lentes */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {PRESET_QUERIES.map((q: PresetQuery) => {
                 const isSelected = activePresetId === q.id;
-                const shortLabels = ['Cadeia Crítica', 'Produção', 'Hubs (Impacto)'];
+                const meta = lensTitles[q.id] || { label: q.title, badge: 'Grafo' };
                 return (
                   <button
                     key={q.id}
@@ -473,102 +513,111 @@ export function App() {
                       executeQuery(q.cypher);
                     }}
                     style={{
-                      background: isSelected ? '#2c2c2e' : 'transparent',
-                      color: isSelected ? '#ffffff' : '#86868b',
-                      border: 'none',
-                      padding: '8px 6px',
-                      borderRadius: '9px',
+                      textAlign: 'left',
+                      background: isSelected
+                        ? 'linear-gradient(135deg, rgba(56, 189, 248, 0.14) 0%, rgba(99, 102, 241, 0.12) 100%)'
+                        : 'rgba(255, 255, 255, 0.025)',
+                      border: isSelected
+                        ? '1px solid rgba(56, 189, 248, 0.45)'
+                        : '1px solid rgba(255, 255, 255, 0.06)',
+                      color: '#f8fafc',
+                      padding: '14px 16px',
+                      borderRadius: '16px',
                       cursor: 'pointer',
-                      fontSize: '0.78rem',
-                      fontWeight: isSelected ? 600 : 500,
-                      boxShadow: isSelected ? '0 2px 8px rgba(0, 0, 0, 0.35)' : 'none',
-                      transition: 'all 0.18s ease',
+                      transition: 'all 0.2s ease',
                     }}
                   >
-                    {shortLabels[idx] || q.title}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '4px',
+                      }}
+                    >
+                      <span style={{ fontWeight: 600, fontSize: '0.88rem' }}>{meta.label}</span>
+                      <span
+                        style={{
+                          fontSize: '0.68rem',
+                          fontWeight: 600,
+                          padding: '2px 9px',
+                          borderRadius: '999px',
+                          background: isSelected
+                            ? 'rgba(56, 189, 248, 0.2)'
+                            : 'rgba(255, 255, 255, 0.06)',
+                          color: isSelected ? '#7dd3fc' : '#94a3b8',
+                        }}
+                      >
+                        {meta.badge}
+                      </span>
+                    </div>
+                    <div style={{ color: '#94a3b8', fontSize: '0.78rem', lineHeight: 1.4 }}>
+                      {q.description}
+                    </div>
                   </button>
                 );
               })}
             </div>
 
-            {/* Descrição sutil da consulta ativa */}
-            {activePreset && (
-              <p
-                style={{
-                  margin: '0 0 12px',
-                  fontSize: '0.78rem',
-                  color: '#86868b',
-                  lineHeight: 1.4,
-                }}
-              >
-                {activePreset.description}
-              </p>
-            )}
-
-            {/* Editor Cypher minimalista estilo Xcode */}
-            <div
-              style={{
-                background: '#09090b',
-                borderRadius: '14px',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                padding: '12px 14px',
-              }}
-            >
-              <textarea
-                value={cypher}
-                onChange={(e) => setCypher(e.target.value)}
-                rows={4}
-                spellCheck={false}
-                style={{
-                  width: '100%',
-                  background: 'transparent',
-                  color: '#64d2ff',
-                  border: 'none',
-                  outline: 'none',
-                  resize: 'vertical',
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: '0.78rem',
-                  lineHeight: 1.55,
-                }}
-              />
-
+            {/* Editor Cypher recolhível (só abre quando clicar em "Ver Cypher") */}
+            {showCode && (
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  marginTop: '8px',
-                  paddingTop: '8px',
-                  borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+                  marginTop: '14px',
+                  background: '#030712',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(56, 189, 248, 0.25)',
+                  padding: '14px',
                 }}
               >
-                <button
-                  onClick={() => executeQuery()}
+                <textarea
+                  value={cypher}
+                  onChange={(e) => setCypher(e.target.value)}
+                  rows={4}
+                  spellCheck={false}
                   style={{
-                    background: '#0a84ff',
-                    color: '#ffffff',
+                    width: '100%',
+                    background: 'transparent',
+                    color: '#7dd3fc',
                     border: 'none',
-                    padding: '7px 16px',
-                    borderRadius: '999px',
-                    fontSize: '0.78rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
+                    outline: 'none',
+                    resize: 'vertical',
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.77rem',
+                    lineHeight: 1.55,
                   }}
-                >
-                  <Play size={12} fill="#ffffff" /> Executar Query
-                </button>
+                />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
+                  <button
+                    onClick={() => executeQuery()}
+                    style={{
+                      background: '#38bdf8',
+                      color: '#030712',
+                      border: 'none',
+                      padding: '7px 16px',
+                      borderRadius: '999px',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                    }}
+                  >
+                    <Play size={12} fill="#030712" /> Executar Consulta
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          {/* Results Table Card */}
+          {/* Card de Resultados Conectados */}
           <div
             style={{
-              background: '#111113',
-              padding: '22px 24px',
-              borderRadius: '20px',
+              background: 'rgba(15, 23, 42, 0.55)',
+              backdropFilter: 'blur(20px)',
+              padding: '24px',
+              borderRadius: '24px',
               border: '1px solid rgba(255, 255, 255, 0.08)',
             }}
           >
@@ -580,45 +629,34 @@ export function App() {
                 marginBottom: '14px',
               }}
             >
-              <h3
-                style={{
-                  margin: 0,
-                  fontSize: '0.95rem',
-                  fontWeight: 600,
-                  letterSpacing: '-0.01em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <Sparkles size={16} color="#bf5af2" />
-                Contexto Conectado
+              <h3 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 600 }}>
+                {activePreset ? lensTitles[activePreset.id]?.label : 'Resultados'}
               </h3>
               <span
                 style={{
-                  background: 'rgba(255, 255, 255, 0.06)',
+                  background: 'rgba(56, 189, 248, 0.12)',
+                  color: '#7dd3fc',
                   padding: '3px 10px',
                   borderRadius: '999px',
                   fontSize: '0.74rem',
-                  color: '#a1a1a6',
+                  fontWeight: 600,
                 }}
               >
-                {queryResult.length} registros
+                {queryResult.length} itens
               </span>
             </div>
 
-            <div style={{ maxHeight: '280px', overflow: 'auto' }}>
+            <div style={{ maxHeight: '300px', overflow: 'auto' }}>
               {queryResult.length === 0 ? (
-                <p style={{ color: '#86868b', fontSize: '0.82rem', margin: 0 }}>
-                  Nenhum registro retornado para esta consulta.
+                <p style={{ color: '#94a3b8', fontSize: '0.83rem', margin: 0 }}>
+                  Nenhum item encontrado nesta lente.
                 </p>
               ) : (
                 <table
                   style={{
                     width: '100%',
                     borderCollapse: 'collapse',
-                    fontSize: '0.79rem',
-                    fontVariantNumeric: 'tabular-nums',
+                    fontSize: '0.8rem',
                   }}
                 >
                   <thead>
@@ -626,7 +664,7 @@ export function App() {
                       style={{
                         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                         textAlign: 'left',
-                        color: '#86868b',
+                        color: '#94a3b8',
                       }}
                     >
                       {Object.keys(queryResult[0]).map((col) => (
@@ -642,7 +680,7 @@ export function App() {
                         key={idx}
                         style={{
                           borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
-                          color: '#e5e5ea',
+                          color: '#e2e8f0',
                         }}
                       >
                         {Object.values(row).map((val: any, cIdx) => {
@@ -650,18 +688,18 @@ export function App() {
                           const isCritical = text === 'CRITICAL';
                           const isHigh = text === 'HIGH';
                           return (
-                            <td key={cIdx} style={{ padding: '9px 6px' }}>
+                            <td key={cIdx} style={{ padding: '10px 6px' }}>
                               {isCritical || isHigh ? (
                                 <span
                                   style={{
-                                    padding: '2px 8px',
+                                    padding: '3px 9px',
                                     borderRadius: '999px',
                                     fontSize: '0.7rem',
                                     fontWeight: 600,
                                     background: isCritical
-                                      ? 'rgba(255, 69, 58, 0.16)'
-                                      : 'rgba(255, 159, 10, 0.16)',
-                                    color: isCritical ? '#ff453a' : '#ff9f0a',
+                                      ? 'rgba(251, 113, 133, 0.16)'
+                                      : 'rgba(251, 191, 36, 0.16)',
+                                    color: isCritical ? '#fb7185' : '#fbbf24',
                                   }}
                                 >
                                   {text}
@@ -684,5 +722,36 @@ export function App() {
     </div>
   );
 }
+
+const kpiCardStyle: React.CSSProperties = {
+  background: 'rgba(15, 23, 42, 0.55)',
+  backdropFilter: 'blur(20px)',
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  borderRadius: '20px',
+  padding: '18px 20px',
+};
+
+const kpiHeaderStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  fontSize: '0.78rem',
+  color: '#94a3b8',
+  fontWeight: 500,
+};
+
+const kpiValueStyle: React.CSSProperties = {
+  fontSize: '1.75rem',
+  fontWeight: 700,
+  letterSpacing: '-0.03em',
+  marginTop: '6px',
+  color: '#ffffff',
+};
+
+const kpiSubStyle: React.CSSProperties = {
+  fontSize: '0.73rem',
+  color: '#64748b',
+  marginTop: '4px',
+};
 
 export default App;
