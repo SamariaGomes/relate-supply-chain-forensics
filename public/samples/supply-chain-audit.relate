@@ -1,0 +1,943 @@
+{
+  "version": "1.0.0",
+  "engine": "relate-1.2.0",
+  "createdAt": "2026-11-25T21:55:09.825Z",
+  "nodes": [
+    {
+      "id": "project:fintech-checkout-service@2.4.0",
+      "label": "Project",
+      "name": "fintech-checkout-service",
+      "properties": {
+        "version": "2.4.0"
+      }
+    },
+    {
+      "id": "express@4.17.1",
+      "label": "Package",
+      "name": "express",
+      "properties": {
+        "version": "4.17.1",
+        "isDirect": true,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "qs@6.7.0",
+      "label": "Package",
+      "name": "qs",
+      "properties": {
+        "version": "6.7.0",
+        "isDirect": false,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "body-parser@1.19.0",
+      "label": "Package",
+      "name": "body-parser",
+      "properties": {
+        "version": "1.19.0",
+        "isDirect": false,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "jsonwebtoken@8.5.1",
+      "label": "Package",
+      "name": "jsonwebtoken",
+      "properties": {
+        "version": "8.5.1",
+        "isDirect": true,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "semver@5.7.1",
+      "label": "Package",
+      "name": "semver",
+      "properties": {
+        "version": "5.7.1",
+        "isDirect": false,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "axios@0.21.1",
+      "label": "Package",
+      "name": "axios",
+      "properties": {
+        "version": "0.21.1",
+        "isDirect": true,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1",
+      "label": "Package",
+      "name": "follow-redirects",
+      "properties": {
+        "version": "1.13.1",
+        "isDirect": false,
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "jest@27.0.0",
+      "label": "Package",
+      "name": "jest",
+      "properties": {
+        "version": "27.0.0",
+        "isDirect": true,
+        "scope": "dev"
+      }
+    },
+    {
+      "id": "vuln:GHSA-qw6h-vgh9-j6wx",
+      "label": "Vulnerability",
+      "name": "GHSA-qw6h-vgh9-j6wx",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-rv95-896h-c2vc",
+      "label": "Vulnerability",
+      "name": "GHSA-rv95-896h-c2vc",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-4mjr-xmp4-gh2g",
+      "label": "Vulnerability",
+      "name": "GHSA-4mjr-xmp4-gh2g",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-6pq8-jhm2-2vcw",
+      "label": "Vulnerability",
+      "name": "GHSA-6pq8-jhm2-2vcw",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-6rw7-vpxm-498p",
+      "label": "Vulnerability",
+      "name": "GHSA-6rw7-vpxm-498p",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-hrpp-h998-j3pp",
+      "label": "Vulnerability",
+      "name": "GHSA-hrpp-h998-j3pp",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-w7fw-mjwx-w883",
+      "label": "Vulnerability",
+      "name": "GHSA-w7fw-mjwx-w883",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-27r3-jxmh-p828",
+      "label": "Vulnerability",
+      "name": "GHSA-27r3-jxmh-p828",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-qwcr-r2fm-qrc7",
+      "label": "Vulnerability",
+      "name": "GHSA-qwcr-r2fm-qrc7",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-v422-hmwv-36x6",
+      "label": "Vulnerability",
+      "name": "GHSA-v422-hmwv-36x6",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-8cf7-32gw-wr33",
+      "label": "Vulnerability",
+      "name": "GHSA-8cf7-32gw-wr33",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-hjrf-2m68-5959",
+      "label": "Vulnerability",
+      "name": "GHSA-hjrf-2m68-5959",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-qwph-4952-7xr6",
+      "label": "Vulnerability",
+      "name": "GHSA-qwph-4952-7xr6",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-c2qf-rxjj-qqgw",
+      "label": "Vulnerability",
+      "name": "GHSA-c2qf-rxjj-qqgw",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-3g43-6gmg-66jw",
+      "label": "Vulnerability",
+      "name": "GHSA-3g43-6gmg-66jw",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-3p68-rc4w-qgx5",
+      "label": "Vulnerability",
+      "name": "GHSA-3p68-rc4w-qgx5",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-43fc-jf86-j433",
+      "label": "Vulnerability",
+      "name": "GHSA-43fc-jf86-j433",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-5c9x-8gcm-mpgx",
+      "label": "Vulnerability",
+      "name": "GHSA-5c9x-8gcm-mpgx",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-62hf-57xw-28j9",
+      "label": "Vulnerability",
+      "name": "GHSA-62hf-57xw-28j9",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-6chq-wfr3-2hj9",
+      "label": "Vulnerability",
+      "name": "GHSA-6chq-wfr3-2hj9",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-7q8q-rj6j-mhjq",
+      "label": "Vulnerability",
+      "name": "GHSA-7q8q-rj6j-mhjq",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-898c-q2cr-xwhg",
+      "label": "Vulnerability",
+      "name": "GHSA-898c-q2cr-xwhg",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-cph5-m8f7-6c5x",
+      "label": "Vulnerability",
+      "name": "GHSA-cph5-m8f7-6c5x",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-fvcv-3m26-pcqx",
+      "label": "Vulnerability",
+      "name": "GHSA-fvcv-3m26-pcqx",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-hfxv-24rg-xrqf",
+      "label": "Vulnerability",
+      "name": "GHSA-hfxv-24rg-xrqf",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-j5f8-grm9-p9fc",
+      "label": "Vulnerability",
+      "name": "GHSA-j5f8-grm9-p9fc",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-jr5f-v2jv-69x6",
+      "label": "Vulnerability",
+      "name": "GHSA-jr5f-v2jv-69x6",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-m7pr-hjqh-92cm",
+      "label": "Vulnerability",
+      "name": "GHSA-m7pr-hjqh-92cm",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-mmx7-hfxf-jppx",
+      "label": "Vulnerability",
+      "name": "GHSA-mmx7-hfxf-jppx",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-p92q-9vqr-4j8v",
+      "label": "Vulnerability",
+      "name": "GHSA-p92q-9vqr-4j8v",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-pf86-5x62-jrwf",
+      "label": "Vulnerability",
+      "name": "GHSA-pf86-5x62-jrwf",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-pjwm-pj3p-43mv",
+      "label": "Vulnerability",
+      "name": "GHSA-pjwm-pj3p-43mv",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-pmwg-cvhr-8vh7",
+      "label": "Vulnerability",
+      "name": "GHSA-pmwg-cvhr-8vh7",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-vf2m-468p-8v99",
+      "label": "Vulnerability",
+      "name": "GHSA-vf2m-468p-8v99",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-w9j2-pvgh-6h63",
+      "label": "Vulnerability",
+      "name": "GHSA-w9j2-pvgh-6h63",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-wf5p-g6vw-rhxx",
+      "label": "Vulnerability",
+      "name": "GHSA-wf5p-g6vw-rhxx",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-xhjh-pmcv-23jw",
+      "label": "Vulnerability",
+      "name": "GHSA-xhjh-pmcv-23jw",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-xx6v-rp6x-q39c",
+      "label": "Vulnerability",
+      "name": "GHSA-xx6v-rp6x-q39c",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-74fj-2j2h-c42q",
+      "label": "Vulnerability",
+      "name": "GHSA-74fj-2j2h-c42q",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-cxjh-pqwp-8mfp",
+      "label": "Vulnerability",
+      "name": "GHSA-cxjh-pqwp-8mfp",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-jchw-25xp-jwwc",
+      "label": "Vulnerability",
+      "name": "GHSA-jchw-25xp-jwwc",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "vuln:GHSA-pw2r-vq6v-hr8c",
+      "label": "Vulnerability",
+      "name": "GHSA-pw2r-vq6v-hr8c",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "vuln:GHSA-r4q5-vmmm-2653",
+      "label": "Vulnerability",
+      "name": "GHSA-r4q5-vmmm-2653",
+      "properties": {
+        "summary": "Vulnerabilidade conhecida registrada na base OSV.dev",
+        "severity": "HIGH"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "project:fintech-checkout-service@2.4.0->express@4.17.1",
+      "source": "project:fintech-checkout-service@2.4.0",
+      "target": "express@4.17.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "project:fintech-checkout-service@2.4.0->jsonwebtoken@8.5.1",
+      "source": "project:fintech-checkout-service@2.4.0",
+      "target": "jsonwebtoken@8.5.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "project:fintech-checkout-service@2.4.0->axios@0.21.1",
+      "source": "project:fintech-checkout-service@2.4.0",
+      "target": "axios@0.21.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "project:fintech-checkout-service@2.4.0->jest@27.0.0",
+      "source": "project:fintech-checkout-service@2.4.0",
+      "target": "jest@27.0.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "dev"
+      }
+    },
+    {
+      "id": "express@4.17.1->qs@6.7.0",
+      "source": "express@4.17.1",
+      "target": "qs@6.7.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "express@4.17.1->body-parser@1.19.0",
+      "source": "express@4.17.1",
+      "target": "body-parser@1.19.0",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "jsonwebtoken@8.5.1->semver@5.7.1",
+      "source": "jsonwebtoken@8.5.1",
+      "target": "semver@5.7.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "axios@0.21.1->follow-redirects@1.13.1",
+      "source": "axios@0.21.1",
+      "target": "follow-redirects@1.13.1",
+      "type": "DEPENDS_ON",
+      "properties": {
+        "scope": "prod"
+      }
+    },
+    {
+      "id": "express@4.17.1->vuln:GHSA-qw6h-vgh9-j6wx",
+      "source": "express@4.17.1",
+      "target": "vuln:GHSA-qw6h-vgh9-j6wx",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "express@4.17.1->vuln:GHSA-rv95-896h-c2vc",
+      "source": "express@4.17.1",
+      "target": "vuln:GHSA-rv95-896h-c2vc",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "qs@6.7.0->vuln:GHSA-4mjr-xmp4-gh2g",
+      "source": "qs@6.7.0",
+      "target": "vuln:GHSA-4mjr-xmp4-gh2g",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "qs@6.7.0->vuln:GHSA-6pq8-jhm2-2vcw",
+      "source": "qs@6.7.0",
+      "target": "vuln:GHSA-6pq8-jhm2-2vcw",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "qs@6.7.0->vuln:GHSA-6rw7-vpxm-498p",
+      "source": "qs@6.7.0",
+      "target": "vuln:GHSA-6rw7-vpxm-498p",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "qs@6.7.0->vuln:GHSA-hrpp-h998-j3pp",
+      "source": "qs@6.7.0",
+      "target": "vuln:GHSA-hrpp-h998-j3pp",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "qs@6.7.0->vuln:GHSA-w7fw-mjwx-w883",
+      "source": "qs@6.7.0",
+      "target": "vuln:GHSA-w7fw-mjwx-w883",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "body-parser@1.19.0->vuln:GHSA-27r3-jxmh-p828",
+      "source": "body-parser@1.19.0",
+      "target": "vuln:GHSA-27r3-jxmh-p828",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "body-parser@1.19.0->vuln:GHSA-qwcr-r2fm-qrc7",
+      "source": "body-parser@1.19.0",
+      "target": "vuln:GHSA-qwcr-r2fm-qrc7",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "body-parser@1.19.0->vuln:GHSA-v422-hmwv-36x6",
+      "source": "body-parser@1.19.0",
+      "target": "vuln:GHSA-v422-hmwv-36x6",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "jsonwebtoken@8.5.1->vuln:GHSA-8cf7-32gw-wr33",
+      "source": "jsonwebtoken@8.5.1",
+      "target": "vuln:GHSA-8cf7-32gw-wr33",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "jsonwebtoken@8.5.1->vuln:GHSA-hjrf-2m68-5959",
+      "source": "jsonwebtoken@8.5.1",
+      "target": "vuln:GHSA-hjrf-2m68-5959",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "jsonwebtoken@8.5.1->vuln:GHSA-qwph-4952-7xr6",
+      "source": "jsonwebtoken@8.5.1",
+      "target": "vuln:GHSA-qwph-4952-7xr6",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "semver@5.7.1->vuln:GHSA-c2qf-rxjj-qqgw",
+      "source": "semver@5.7.1",
+      "target": "vuln:GHSA-c2qf-rxjj-qqgw",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-3g43-6gmg-66jw",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-3g43-6gmg-66jw",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-3p68-rc4w-qgx5",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-3p68-rc4w-qgx5",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-43fc-jf86-j433",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-43fc-jf86-j433",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-5c9x-8gcm-mpgx",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-5c9x-8gcm-mpgx",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-62hf-57xw-28j9",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-62hf-57xw-28j9",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-6chq-wfr3-2hj9",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-6chq-wfr3-2hj9",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-7q8q-rj6j-mhjq",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-7q8q-rj6j-mhjq",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-898c-q2cr-xwhg",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-898c-q2cr-xwhg",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-cph5-m8f7-6c5x",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-cph5-m8f7-6c5x",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-fvcv-3m26-pcqx",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-fvcv-3m26-pcqx",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-hfxv-24rg-xrqf",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-hfxv-24rg-xrqf",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-j5f8-grm9-p9fc",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-j5f8-grm9-p9fc",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-jr5f-v2jv-69x6",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-jr5f-v2jv-69x6",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-m7pr-hjqh-92cm",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-m7pr-hjqh-92cm",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-mmx7-hfxf-jppx",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-mmx7-hfxf-jppx",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-p92q-9vqr-4j8v",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-p92q-9vqr-4j8v",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-pf86-5x62-jrwf",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-pf86-5x62-jrwf",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-pjwm-pj3p-43mv",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-pjwm-pj3p-43mv",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-pmwg-cvhr-8vh7",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-pmwg-cvhr-8vh7",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-vf2m-468p-8v99",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-vf2m-468p-8v99",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-w9j2-pvgh-6h63",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-w9j2-pvgh-6h63",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-wf5p-g6vw-rhxx",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-wf5p-g6vw-rhxx",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-xhjh-pmcv-23jw",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-xhjh-pmcv-23jw",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "axios@0.21.1->vuln:GHSA-xx6v-rp6x-q39c",
+      "source": "axios@0.21.1",
+      "target": "vuln:GHSA-xx6v-rp6x-q39c",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1->vuln:GHSA-74fj-2j2h-c42q",
+      "source": "follow-redirects@1.13.1",
+      "target": "vuln:GHSA-74fj-2j2h-c42q",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1->vuln:GHSA-cxjh-pqwp-8mfp",
+      "source": "follow-redirects@1.13.1",
+      "target": "vuln:GHSA-cxjh-pqwp-8mfp",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1->vuln:GHSA-jchw-25xp-jwwc",
+      "source": "follow-redirects@1.13.1",
+      "target": "vuln:GHSA-jchw-25xp-jwwc",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1->vuln:GHSA-pw2r-vq6v-hr8c",
+      "source": "follow-redirects@1.13.1",
+      "target": "vuln:GHSA-pw2r-vq6v-hr8c",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "CRITICAL"
+      }
+    },
+    {
+      "id": "follow-redirects@1.13.1->vuln:GHSA-r4q5-vmmm-2653",
+      "source": "follow-redirects@1.13.1",
+      "target": "vuln:GHSA-r4q5-vmmm-2653",
+      "type": "HAS_VULNERABILITY",
+      "properties": {
+        "severity": "HIGH"
+      }
+    }
+  ]
+}
